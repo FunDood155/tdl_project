@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TDL</title>
+    </head>
+    <body>
+        <h2>To Do List</h2>
+
+        <form action="/add" method="POST">
+            <input type="text" name="task" placeholder="Enter new task">
+            <button type="submit">Add</button>
+        </form>
+
+        <table border="1" >
+            <tr>
+                <th>ID</th>
+                <th>Work</th>
+                <th>Date</th>
+                <th>Status</th>
+            </tr>
+            {% for task in tasks %}
+                <tr>
+                    <td>{{task[0]}}</td>
+                    <td>{{task[1]}}</td>
+                    <td>{{task[2]}}</td>
+                    <td>{{task[3]}}</td>
+                    <td>
+                        <a href="/delete/{{task[0]}}">
+                            <button>Delete</button>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="/done/{{task[0]}}">
+                            <button>Done</button>
+                        </a>
+                    </td>
+                    
+                </tr>
+            {% endfor %}
+        </table>
+
+        <!-- <form action="/clear" >
+            <button type="submit">Clear</button>
+        </form> -->
+        <form action="/clear" onsubmit="return confirm('Clear entire table?');">
+            <button>Clear</button>
+        </form>
+    </body>
+</html>
