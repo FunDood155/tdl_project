@@ -20,8 +20,9 @@ def home():
 def add():
 
     task = request.form["task"]
-
-    db.add_activity(task)
+    
+    if task !="":
+         db.add_activity(task)
 
     return redirect("/")
 

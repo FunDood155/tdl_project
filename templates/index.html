@@ -2,8 +2,10 @@
 <html>
     <head>
         <title>TDL</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     </head>
     <body>
+        <div class="container">
         <h2>To Do List</h2>
 
         <form action="/add" method="POST">
@@ -42,5 +44,6 @@
         <form action="/clear" method="POST" onsubmit="return confirm('Clear entire table?');">
             <button type="submit">Clear</button>
         </form>
+        </div>
     </body>
 </html>
