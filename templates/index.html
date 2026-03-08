@@ -25,25 +25,22 @@
                     <td>{{task[2]}}</td>
                     <td>{{task[3]}}</td>
                     <td>
-                        <a href="/delete/{{task[0]}}">
-                            <button>Delete</button>
-                        </a>
+                        <form action="/delete/{{task[0]}}" method="POST">
+                            <button type="submit">Delete</button>
+                        </form>
                     </td>
                     <td>
-                        <a href="/done/{{task[0]}}">
-                            <button>Done</button>
-                        </a>
+                        <form action="/done/{{task[0]}}" method="POST">
+                            <button type="submit">Done</button>
+                        </form>
                     </td>
                     
                 </tr>
             {% endfor %}
         </table>
 
-        <!-- <form action="/clear" >
+        <form action="/clear" method="POST" onsubmit="return confirm('Clear entire table?');">
             <button type="submit">Clear</button>
-        </form> -->
-        <form action="/clear" onsubmit="return confirm('Clear entire table?');">
-            <button>Clear</button>
         </form>
     </body>
 </html>
