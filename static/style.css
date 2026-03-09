@@ -10,7 +10,7 @@ body {
 
 /* Main container */
 .container {
-    background: white;
+    background: rgb(141, 137, 137);
     padding: 25px;
     border-radius: 10px;
     width: 350px;
@@ -38,7 +38,7 @@ input {
 /* Button */
 button {
     padding: 8px 12px;
-    background: #4CAF50;
+    background: #383f38;
     border: none;
     color: white;
     cursor: pointer;
