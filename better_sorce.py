@@ -1,53 +1,42 @@
-import mysql.connector
+import sqlite3
 
-# ---------- DATABASE CONNECTION ----------
-def get_connection():
-    return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="root155",
-        database="tdldb"
-    )
-
-con = get_connection()
+con = sqlite3.connect("tasks.db", check_same_thread=False)
 cursor = con.cursor()
 
-# ---------- CREATE TABLE ----------
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS tdl_table (
-    num INT AUTO_INCREMENT PRIMARY KEY,
-    work VARCHAR(99),
+    num INTEGER PRIMARY KEY AUTOINCREMENT,
+    work TEXT,
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    status VARCHAR(99)
+    status TEXT
 )
 """)
+
+con.commit()
 
 # ---------- FUNCTIONS ----------
 
 def add_activity(work):
-    query = "INSERT INTO tdl_table (work,status) VALUES (%s,%s)"
+    query = "INSERT INTO tdl_table (work,status) VALUES (?,?)"
     cursor.execute(query,(work,"no"))
     con.commit()
 
-
 def remove_activity(num):
-    query = "DELETE FROM tdl_table WHERE num=%s"
+    query = "DELETE FROM tdl_table WHERE num=?"
     cursor.execute(query,(num,))
     con.commit()
-
 
 def display_activity():
     query = "SELECT * FROM tdl_table"
     cursor.execute(query)
     return cursor.fetchall()
 
-
 def table_clear():
     cursor.execute("TRUNCATE TABLE tdl_table")
     con.commit()
 
 def mark_done(num):
-    a = "update tdl_table set status='done' where num=%s"
+    a = "update tdl_table set status='done' where num=?"
     cursor.execute(a,(num,))
     con.commit()
 
@@ -77,3 +66,31 @@ if __name__=="__main__":
         elif ch == 5:
             print("Exited successfully")
             break
+
+
+#old sql code
+
+
+# import mysql.connector
+
+# # ---------- DATABASE CONNECTION ----------
+# def get_connection():
+#     return mysql.connector.connect(
+#         host="localhost",
+#         user="root",
+#         password="root155",
+#         database="tdldb"
+#     )
+
+# con = get_connection()
+# cursor = con.cursor()
+
+# ---------- CREATE TABLE ----------
+# cursor.execute("""
+# CREATE TABLE IF NOT EXISTS tdl_table (
+#     num INT AUTO_INCREMENT PRIMARY KEY,
+#     work VARCHAR(99),
+#     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+#     status VARCHAR(99)
+# )
+# """)
