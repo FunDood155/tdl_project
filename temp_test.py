@@ -28,3 +28,25 @@ class Solution:
             cur=cur.next
 
         return dummy.next
+
+
+def ex_for_node():
+    class ListNode:
+        def __init__(self, val=0, next=None):
+            self.val = val
+            self.next = next
+
+
+        # Creating 3 nodes
+        n3 = ListNode(30)
+        n2 = ListNode(20, n3)
+        n1 = ListNode(10, n2)
+
+        head = n1   # start of the linked list
+
+
+        # Loop to print values
+        node = head
+        while node:
+            print(node.val)
+            node = node.next
