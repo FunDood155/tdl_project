@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect
-import better_sorce as db
+from flask import Flask, render_template, request, redirect, session
+import better_source as db
 
 app = Flask(__name__)
+app.secret_key = "tdl_secret"
 
 
 # ---------- DISPLAY PAGE ----------
@@ -9,7 +10,8 @@ app = Flask(__name__)
 @app.route("/", methods=["GET"])
 def home():
 
-    tasks = db.display_activity()
+    user_id = 1
+    tasks = db.display_activity(user_id)
 
     return render_template("index.html", tasks=tasks)
 
@@ -21,8 +23,9 @@ def add():
 
     task = request.form["task"]
     
-    if task !="":
-         db.add_activity(task)
+    if task != "":
+        user_id = 1
+        db.add_activity(task, user_id)
 
     return redirect("/")
 
@@ -52,7 +55,8 @@ def delete(id):
 @app.route("/clear", methods=["POST"])
 def clear():
 
-    db.table_clear()
+    user_id = 1
+    db.table_clear(user_id)
 
     return redirect("/")
 

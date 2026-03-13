@@ -1,49 +1,63 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>TDL</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    </head>
-    <body>
-        <div class="container">
-        <h2>To Do List</h2>
+<head>
+    <title>TDL</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
 
-        <form action="/add" method="POST">
-            <input type="text" name="task" placeholder="Enter new task">
-            <button type="submit">Add</button>
+<body>
+
+<div class="container">
+
+<h2>To Do List</h2>
+
+<form action="/add" method="POST">
+    <input type="text" name="task" placeholder="Enter new task" required>
+    <button type="submit">Add</button>
+</form>
+
+<table border="1">
+
+<tr>
+    <th>ID</th>
+    <th>Work</th>
+    <th>Date</th>
+    <th>Status</th>
+    <th>Delete</th>
+    <th>Done</th>
+</tr>
+
+{% for task in tasks %}
+
+<tr>
+    <td>{{task[0]}}</td>
+    <td>{{task[1]}}</td>
+    <td>{{task[2]}}</td>
+    <td>{{task[3]}}</td>
+
+    <td>
+        <form action="/delete/{{task[0]}}" method="POST">
+            <button type="submit">Delete</button>
         </form>
+    </td>
 
-        <table border="1" >
-            <tr>
-                <th>ID</th>
-                <th>Work</th>
-                <th>Date</th>
-                <th>Status</th>
-            </tr>
-            {% for task in tasks %}
-                <tr>
-                    <td>{{task[0]}}</td>
-                    <td>{{task[1]}}</td>
-                    <td>{{task[2]}}</td>
-                    <td>{{task[3]}}</td>
-                    <td>
-                        <form action="/delete/{{task[0]}}" method="POST">
-                            <button type="submit">Delete</button>
-                        </form>
-                    </td>
-                    <td>
-                        <form action="/done/{{task[0]}}" method="POST">
-                            <button type="submit">Done</button>
-                        </form>
-                    </td>
-                    
-                </tr>
-            {% endfor %}
-        </table>
-
-        <form action="/clear" method="POST" onsubmit="return confirm('Clear entire table?');">
-            <button type="submit">Clear</button>
+    <td>
+        <form action="/done/{{task[0]}}" method="POST">
+            <button type="submit">Done</button>
         </form>
-        </div>
-    </body>
+    </td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<form action="/clear" method="POST" onsubmit="return confirm('Clear entire table?');">
+    <button type="submit">Clear</button>
+</form>
+
+</div>
+
+</body>
 </html>
