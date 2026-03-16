@@ -10,11 +10,13 @@ app.secret_key = "tdl_secret"
 @app.route("/", methods=["GET"])
 def home():
 
-    user_id = 1
+    if "user_id" not in session:
+        return redirect("/login")
+
+    user_id = session["user_id"]
     tasks = db.display_activity(user_id)
 
     return render_template("index.html", tasks=tasks)
-
 
 # ---------- ADD TASK ----------
 
@@ -24,7 +26,7 @@ def add():
     task = request.form["task"]
     
     if task != "":
-        user_id = 1
+        user_id = session["user_id"]
         db.add_activity(task, user_id)
 
     return redirect("/")
@@ -55,11 +57,46 @@ def delete(id):
 @app.route("/clear", methods=["POST"])
 def clear():
 
-    user_id = 1
+    user_id = session["user_id"]
     db.table_clear(user_id)
 
     return redirect("/")
 
+
+@app.route("/register", methods=["GET","POST"])
+def register():
+
+    if request.method == "POST":
+
+        username = request.form["username"]
+        password = request.form["password"]
+
+        db.register_user(username,password)
+
+        return redirect("/login")
+
+    return render_template("register.html")
+
+
+@app.route("/login", methods=["GET","POST"])
+def login():
+
+    if request.method == "POST":
+
+        username = request.form["username"]
+        password = request.form["password"]
+
+        user = db.get_user(username)
+
+        if user and user[2] == password:
+
+            session["user_id"] = user[0]
+
+            return redirect("/")
+
+        return "Invalid login"
+
+    return render_template("login.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
