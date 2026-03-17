@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, session
+from werkzeug.security import generate_password_hash, check_password_hash
 import better_sorce as db
 
 app = Flask(__name__)
@@ -71,7 +72,8 @@ def register():
         username = request.form["username"]
         password = request.form["password"]
 
-        db.register_user(username,password)
+        hashed_password = generate_password_hash(password)
+        db.register_user(username, hashed_password)
 
         return redirect("/login")
 
@@ -88,7 +90,7 @@ def login():
 
         user = db.get_user(username)
 
-        if user and user[2] == password:
+        if user and check_password_hash(user[2], password):
 
             session["user_id"] = user[0]
 

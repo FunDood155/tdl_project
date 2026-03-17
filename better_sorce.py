@@ -122,6 +122,9 @@ if __name__=="__main__":
             cursor.execute("select * from users")
             print(cursor.fetchall())
         
+        elif ch=='t':
+            cursor.execute("drop table users")
+
         else:
             print("Exited successfully")
             break
