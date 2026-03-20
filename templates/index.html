@@ -3,6 +3,7 @@
 <head>
     <title>TDL</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
 </head>
 
 <body>
@@ -10,16 +11,27 @@
 <div class="container">
 
 <h2>To Do List</h2>
-
+<p style="text-align:center;">
+    Welcome, {{ session['username'] }} 👋
+</p>
+<a href="/logout" onclick="return confirm('Are you sure you want to logout?')">
+    <button>Logout</button>
+</a>
 <form action="/add" method="POST">
     <input type="text" name="task" placeholder="Enter new task" required>
     <button type="submit">Add</button>
 </form>
 
+{% if tasks|length == 0 %}
+
+    <p style="text-align:center;">No tasks yet 🚀</p>
+
+{% else %}
+
 <table border="1">
 
 <tr>
-    <th>ID</th>
+    <th>S.No</th>
     <th>Work</th>
     <th>Date</th>
     <th>Status</th>
@@ -30,10 +42,15 @@
 {% for task in tasks %}
 
 <tr>
-    <td>{{task[0]}}</td>
+    <td>{{loop.index}}</td>
     <td>{{task[1]}}</td>
-    <td>{{task[2]}}</td>
-    <td>{{task[3]}}</td>
+    <td>
+        {{ task[2].split(' ')[0] }}<br>
+        {{ task[2].split(' ')[1][:5] }}
+    </td>
+    <td class="{{ 'done' if task[3]|trim|lower == 'done' else 'pending' }}">
+        {{task[3]}}
+    </td>
 
     <td>
         <form action="/delete/{{task[0]}}" method="POST">
@@ -43,7 +60,13 @@
 
     <td>
         <form action="/done/{{task[0]}}" method="POST">
-            <button type="submit">Done</button>
+            <button type="submit"
+                {% if task[3]|trim|lower == 'done' %}
+                    disabled
+                    style="background:#777; cursor:not-allowed;"
+                {% endif %}>
+                    Done
+            </button>
         </form>
     </td>
 
@@ -52,6 +75,8 @@
 {% endfor %}
 
 </table>
+
+{% endif %} 
 
 <form action="/clear" method="POST" onsubmit="return confirm('Clear entire table?');">
     <button type="submit">Clear</button>

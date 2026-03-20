@@ -3,7 +3,7 @@ import sqlite3
 con = sqlite3.connect("tasks.db", check_same_thread=False)
 cursor = con.cursor()
 
-# ---------- CREATE TABLE ----------
+# ---------- CREATE TABLE tdl_table and users ----------
 
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS tdl_table (
@@ -25,18 +25,28 @@ CREATE TABLE IF NOT EXISTS users (
 """)
 con.commit()
 
-
 # ---------- FUNCTIONS ----------
 
 def add_activity(work, user_id):
+
+    # ✅ Check if task already exists for this user
+    cursor.execute(
+        "SELECT * FROM tdl_table WHERE work=? AND user_id=?",
+        (work, user_id)
+    )
+
+    if cursor.fetchone():
+        return   # ❌ Do not insert duplicate
+
+    # ✅ Insert if not duplicate
     query = "INSERT INTO tdl_table (work,status,user_id) VALUES (?,?,?)"
     cursor.execute(query,(work,"no",user_id))
     con.commit()
 
 
-def remove_activity(num):
-    query = "DELETE FROM tdl_table WHERE num=?"
-    cursor.execute(query,(num,))
+def remove_activity(num, user_id):
+    query = "DELETE FROM tdl_table WHERE num = ? AND user_id = ?"
+    cursor.execute(query,(num,user_id))
     con.commit()
 
 
@@ -51,9 +61,9 @@ def table_clear(user_id):
     con.commit()
 
 
-def mark_done(num):
-    query = "UPDATE tdl_table SET status='done' WHERE num=?"
-    cursor.execute(query,(num,))
+def mark_done(num, user_id):
+    query = "UPDATE tdl_table SET status='done' WHERE num=? and user_id=?"
+    cursor.execute(query,(num,user_id))
     con.commit()
 
 
@@ -75,8 +85,8 @@ def get_user(username):
 
 if __name__=="__main__":
 
-    user_id = 1   # test user
-
+    # user_id = 1   # test user
+    user_id = int(input("Enter user id : "))
     while True:
 
         print("\n1.Add  2.Remove  3.Display  4.Clear  5.Mark Done  6.Register user  7.Get user  8.Display all users  9.Exit")
@@ -88,7 +98,7 @@ if __name__=="__main__":
 
         elif ch == '2':
             num = int(input("Enter activity number: "))
-            remove_activity(num)
+            remove_activity(num ,user_id)
 
         elif ch == '3':
             rows = display_activity(user_id)
@@ -100,7 +110,7 @@ if __name__=="__main__":
 
         elif ch == '5':
             num = int(input("Enter activity number: "))
-            mark_done(num)
+            mark_done(num, user_id)
 
         elif ch== '6':
             ut=input("Enter username to add: ")

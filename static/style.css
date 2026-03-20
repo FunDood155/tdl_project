@@ -1,64 +1,172 @@
-/* Page layout */
+/* Page */
 body {
-    font-family: Arial, sans-serif;
-    background: #f4f6f8;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #2f3337;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
+    align-items: flex-start;  /* 🔥 KEY CHANGE */
+    padding: 40px 0;
 }
 
-/* Main container */
 .container {
-    background: rgb(141, 137, 137);
+    background: #3b4045;
     padding: 25px;
-    border-radius: 10px;
-    width: 350px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    width: 620px;          /* ✅ responsive */
+    max-width: 90%;    /* ✅ limit max size */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    color: white;
 }
 
 /* Title */
-h1 {
+h2 {
     text-align: center;
+    margin-bottom: 15px;
 }
 
-/* Input area */
+/* Logout button */
+.container a button {
+    float: right;
+    margin-bottom: 10px;
+    background: #e74c3c;
+}
+
+.container a button:hover {
+    background: #c0392b;
+}
+
+/* Form */
 form {
     display: flex;
     gap: 10px;
+    margin-bottom: 15px;
 }
 
+/* Inputs */
 input {
     flex: 1;
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
 }
 
-/* Button */
+/* Buttons */
 button {
-    padding: 8px 12px;
-    background: #383f38;
+    padding: 10px 14px;
+    background: #4CAF50;
     border: none;
     color: white;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 6px;
+    transition: 0.2s;
 }
 
-/*  Button hover */
 button:hover {
-    background: #45a049;
+    background: #43a047;
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: #2f3337;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    table-layout: auto;   /* 🔥 let browser decide */
+}
+
+/* Keep Work column flexible */
+td:nth-child(2) {
+    width: 30%;
+}
+
+/* Keep Date readable */
+td:nth-child(3) {
+    white-space: nowrap;
+}
+
+/* Prevent text breaking */
+td {
+    white-space: nowrap;
+}
+
+/* Prevent button breaking */
+button {
+    white-space: nowrap;
+    
+}
+
+/* Keep table structured */
+table {
+    table-layout: fixed;
 }
 
 
-/* Task list */
-ul {
-    list-style: none;
-    padding: 0;
-    margin-top: 20px;
-}
-
-li {
+/* Table header */
+th {
+    background: #4CAF50;
     padding: 10px;
-    border-bottom: 1px solid #eee;
+}
+
+/* Table cells */
+td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #555;
+}
+
+/* Status colors */
+.done {
+    color: #2ecc71;
+    font-weight: bold;
+}
+
+.pending {
+    color: #e67e22;
+}
+
+/* Clear button */
+form:last-child button {
+    width: 100%;
+    margin-top: 10px;
+    background: #f39c12;
+}
+
+form:last-child button:hover {
+    background: #d68910;
+}
+
+button:disabled {
+    background: #777;
+    cursor: not-allowed;
+}
+
+th, td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+tr:hover {
+    background: #3a3f44;
+}
+
+.btn-link {
+    display: inline-block;
+    padding: 8px 14px;
+    background: #3498db;
+    color: white;
+    text-decoration: none;   /* remove underline */
+    border-radius: 6px;
+    text-align: center;
+    transition: 0.2s;
+}
+
+.btn-link:hover {
+    background: #2980b9;
 }

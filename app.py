@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 import better_sorce as db
 
@@ -24,6 +24,10 @@ def home():
 @app.route("/add", methods=["POST"])
 def add():
 
+    # ✅ ADD THIS CHECK
+    if "user_id" not in session:
+        return redirect("/login")
+
     task = request.form["task"]
     
     if task != "":
@@ -38,7 +42,7 @@ def add():
 @app.route("/done/<int:id>", methods=["POST"])
 def done(id):
 
-    db.mark_done(id)
+    db.mark_done(id, session["user_id"])
 
     return redirect("/")
 
@@ -48,7 +52,7 @@ def done(id):
 @app.route("/delete/<int:id>", methods=["POST"])
 def delete(id):
 
-    db.remove_activity(id)
+    db.remove_activity(id, session["user_id"])
 
     return redirect("/")
 
@@ -93,12 +97,18 @@ def login():
         if user and check_password_hash(user[2], password):
 
             session["user_id"] = user[0]
-
+            session["username"] = user[1].upper()   # ✅ ADD THIS LINE
             return redirect("/")
 
-        return "Invalid login"
+        flash("Account not found. Please register first.")
+        return redirect("/register")
 
     return render_template("login.html")
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/login")
 
 if __name__ == "__main__":
     app.run(debug=True)
