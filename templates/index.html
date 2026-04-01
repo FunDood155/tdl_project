@@ -9,22 +9,34 @@
 <body>
 
 <div class="container">
+<!-- <h2>To Do List</h2> -->
 
-<h2>To Do List</h2>
+<div class="empty-state">
+    <h2>To Do List</h2>
+</div>
 <p style="text-align:center;">
     Welcome, {{ session['username'] }} 👋
 </p>
-<a href="/logout" onclick="return confirm('Are you sure you want to logout?')">
-    <button>Logout</button>
-</a>
+
 <form action="/add" method="POST">
     <input type="text" name="task" placeholder="Enter new task" required>
     <button type="submit">Add</button>
 </form>
-
+<a href="/dashboard">
+    <button>Dashboard</button>
+</a>
+<a href="/profile">
+    <button>Profile</button>
+</a>
+<a href="/logout" onclick="return confirm('Are you sure you want to logout?')">
+    <button>Logout</button>
+</a>
+<br>
 {% if tasks|length == 0 %}
 
-    <p style="text-align:center;">No tasks yet 🚀</p>
+    <div class="empty-state">
+        <p>No tasks yet 🚀</p>
+    </div>
 
 {% else %}
 

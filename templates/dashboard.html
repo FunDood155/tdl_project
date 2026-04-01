@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Dashboard 📊</h2>
+
+<p style="text-align:center;">Welcome, {{ session['username'] }} 👋</p>
+
+<div class="dash-box">
+    <div class="card">
+        <h3>Total Tasks</h3>
+        <p>{{ total }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Completed</h3>
+        <p class="green">{{ done }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Pending</h3>
+        <p class="orange">{{ pending }}</p>
+    </div>
+</div>
+
+<a href="/">
+    <button>Go to Tasks</button>
+</a>
+
+</div>
+
+</body>
+</html>

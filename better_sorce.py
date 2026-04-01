@@ -40,7 +40,7 @@ def add_activity(work, user_id):
 
     # ✅ Insert if not duplicate
     query = "INSERT INTO tdl_table (work,status,user_id) VALUES (?,?,?)"
-    cursor.execute(query,(work,"no",user_id))
+    cursor.execute(query,(work,"No",user_id))
     con.commit()
 
 
@@ -62,7 +62,7 @@ def table_clear(user_id):
 
 
 def mark_done(num, user_id):
-    query = "UPDATE tdl_table SET status='done' WHERE num=? and user_id=?"
+    query = "UPDATE tdl_table SET status='Done' WHERE num=? and user_id=?"
     cursor.execute(query,(num,user_id))
     con.commit()
 
@@ -80,6 +80,12 @@ def get_user(username):
     cursor.execute(query,(username,))
     return cursor.fetchone()
 
+def get_user_by_id(user_id):
+
+    cursor.execute("SELECT * FROM users WHERE id=?", (user_id,))
+    user = cursor.fetchone()
+
+    return user
 
 # ---------- MAIN (for terminal testing only) ----------
 

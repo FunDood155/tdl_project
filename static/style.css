@@ -1,48 +1,58 @@
-/* Page */
+/* ---------- PAGE ---------- */
+
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
     background: #2f3337;
     display: flex;
     justify-content: center;
-    align-items: flex-start;  /* 🔥 KEY CHANGE */
+    align-items: flex-start;
     padding: 40px 0;
+    margin: 0;
+    color: white;
 }
+
+
+/* ---------- CONTAINER ---------- */
 
 .container {
     background: #3b4045;
     padding: 25px;
     border-radius: 12px;
-    width: 620px;          /* ✅ responsive */
-    max-width: 90%;    /* ✅ limit max size */
+    width: 820px;
+    max-width: 90%;
     box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    color: white;
 }
 
-/* Title */
+
+/* ---------- TITLE ---------- */
+
 h2 {
     text-align: center;
     margin-bottom: 15px;
 }
 
-/* Logout button */
+
+/* ---------- TOP BUTTONS ---------- */
+
 .container a button {
     float: right;
-    margin-bottom: 10px;
+    margin: 5px;
     background: #e74c3c;
 }
 
 .container a button:hover {
-    background: #c0392b;
+    background: #f41f07;
 }
 
-/* Form */
+
+/* ---------- FORM ---------- */
+
 form {
     display: flex;
     gap: 10px;
     margin-bottom: 15px;
 }
 
-/* Inputs */
 input {
     flex: 1;
     padding: 10px;
@@ -51,7 +61,9 @@ input {
     outline: none;
 }
 
-/* Buttons */
+
+/* ---------- BUTTONS ---------- */
+
 button {
     padding: 10px 14px;
     background: #4CAF50;
@@ -60,15 +72,27 @@ button {
     cursor: pointer;
     border-radius: 6px;
     transition: 0.2s;
+    white-space: nowrap;
+    letter-spacing: 1px;
+    font-weight: 800;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
 }
 
 button:hover {
-    background: #43a047;
+    background: #21ba29;
 }
 
-/* Table */
+button:disabled {
+    background: #777;
+    cursor: not-allowed;
+}
+
+
+/* ---------- TABLE ---------- */
+
 table {
     width: 100%;
+    table-layout: fixed;          /* ✅ FIXED (important) */
     border-collapse: collapse;
     margin-top: 10px;
     background: #2f3337;
@@ -76,52 +100,48 @@ table {
     overflow: hidden;
 }
 
-table {
-    width: 100%;
-    table-layout: auto;   /* 🔥 let browser decide */
-}
-
-/* Keep Work column flexible */
-td:nth-child(2) {
-    width: 30%;
-}
-
-/* Keep Date readable */
-td:nth-child(3) {
-    white-space: nowrap;
-}
-
-/* Prevent text breaking */
-td {
-    white-space: nowrap;
-}
-
-/* Prevent button breaking */
-button {
-    white-space: nowrap;
-    
-}
-
-/* Keep table structured */
-table {
-    table-layout: fixed;
-}
-
-
-/* Table header */
 th {
-    background: #4CAF50;
+    background: #27ae60;   color: white;
     padding: 10px;
+    color: white;
+    letter-spacing: 1px;
+    font-weight: 800;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
 }
 
-/* Table cells */
-td {
+th, td {
     padding: 10px;
     text-align: center;
     border-bottom: 1px solid #555;
+    vertical-align: middle;
 }
 
-/* Status colors */
+
+/* ---------- WORK COLUMN (FIX) ---------- */
+
+th:nth-child(2),td:nth-child(2) {
+    width: 280px;
+    word-break: break-word;
+    white-space: normal;
+}
+
+
+/* ---------- DATE COLUMN ---------- */
+
+th:nth-child(3),td:nth-child(3) {
+    white-space: nowrap;
+}
+
+
+/* ---------- ROW HOVER ---------- */
+
+tr:hover {
+    background: #3a3f44;
+}
+
+
+/* ---------- STATUS ---------- */
+
 .done {
     color: #2ecc71;
     font-weight: bold;
@@ -131,42 +151,95 @@ td {
     color: #e67e22;
 }
 
-/* Clear button */
+
+/* ---------- CLEAR BUTTON ---------- */
+
 form:last-child button {
     width: 100%;
     margin-top: 10px;
-    background: #f39c12;
+    background: #d78705;
 }
 
 form:last-child button:hover {
-    background: #d68910;
+    background: #ff9d00;
 }
 
-button:disabled {
-    background: #777;
-    cursor: not-allowed;
-}
 
-th, td {
-    text-align: center;
-    vertical-align: middle;
-}
-
-tr:hover {
-    background: #3a3f44;
-}
+/* ---------- LINKS AS BUTTON ---------- */
 
 .btn-link {
     display: inline-block;
     padding: 8px 14px;
     background: #3498db;
     color: white;
-    text-decoration: none;   /* remove underline */
+    text-decoration: none;
     border-radius: 6px;
-    text-align: center;
     transition: 0.2s;
 }
 
 .btn-link:hover {
     background: #2980b9;
+}
+
+
+/* ---------- DASHBOARD ---------- */
+
+.dash-box {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.card {
+    background: #2f3337;
+    padding: 15px;
+    border-radius: 10px;
+    flex: 1;
+    text-align: center;
+}
+
+.card h3 {
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.green {
+    color: #2ecc71;
+}
+
+.orange {
+    color: #f39c12;
+}
+
+.empty-state {
+    width: 100%;
+    display: flex;
+    justify-content: center;   /* horizontal center */
+    align-items: center;       /* vertical alignment */
+    margin: 20px 0;
+}
+
+.empty-state p {
+    color: white;
+    letter-spacing: 1px;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+    text-align: center;
+    font-size: 16px;
+    color: #ccc;
+}
+
+.empty-state h2 {
+    color: rgb(255, 255, 255);
+    letter-spacing: 2px;
+    font-weight: 800;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+    text-align: center;
+    font-size: 22px;
+    color: #ccc;
 }

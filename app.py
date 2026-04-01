@@ -41,9 +41,10 @@ def add():
 
 @app.route("/done/<int:id>", methods=["POST"])
 def done(id):
+    if "user_id" not in session:
+        return redirect("/login")
 
     db.mark_done(id, session["user_id"])
-
     return redirect("/")
 
 
@@ -51,9 +52,10 @@ def done(id):
 
 @app.route("/delete/<int:id>", methods=["POST"])
 def delete(id):
+    if "user_id" not in session:
+        return redirect("/login")
 
     db.remove_activity(id, session["user_id"])
-
     return redirect("/")
 
 
@@ -61,6 +63,8 @@ def delete(id):
 
 @app.route("/clear", methods=["POST"])
 def clear():
+    if "user_id" not in session:
+        return redirect("/login")
 
     user_id = session["user_id"]
     db.table_clear(user_id)
@@ -109,6 +113,36 @@ def login():
 def logout():
     session.clear()
     return redirect("/login")
+
+@app.route('/profile')
+def profile():
+    if 'user_id' not in session:
+        return redirect('/login')
+
+    user = db.get_user_by_id(session['user_id'])
+
+    return render_template("profile.html", user=user)
+
+@app.route('/dashboard')
+def dashboard():
+    if "user_id" not in session:
+        return redirect("/login")
+
+    user_id = session["user_id"]
+
+    tasks = db.display_activity(user_id)
+
+    total = len(tasks)
+    done = len([t for t in tasks if t[3] == "done"])
+    pending = total - done
+
+    return render_template("dashboard.html",total=total,done=done,pending=pending)
+
+
+
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

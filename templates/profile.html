@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Profile 👤</h2>
+
+<p><strong>Username:</strong> {{ user[1] }}</p>
+<p><strong>User ID:</strong> {{ user[0] }}</p>
+
+<a href="/", methods="GET">
+    <button>Back to Home</button>
+</a>
+
+</div>
+
+</body>
+</html>
